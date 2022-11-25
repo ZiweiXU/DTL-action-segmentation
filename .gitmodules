@@ -1,0 +1,3 @@
+[submodule "lib/xutilities"]
+	path = lib/xutilities
+	url = https://github.com/ZiweiXU/xutilities.git
