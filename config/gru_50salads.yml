@@ -1,0 +1,51 @@
+max_epoch: 50
+
+acc_name: 'total_score'
+
+ds_name: 'lib.dataset.asdataset.ActionSegmentationDataset'
+ds_params:
+  commons:
+    dataset: '50salads'
+    csv_dir: 'dataset/csv/'
+    split: 1
+  train:
+    mode: 'trainval'
+    frac_samples: 1.0
+  val:
+    mode: 'test'
+  test:
+    mode: 'test'
+
+model_name: 'lib.model.gru.GRU'
+model_params:
+  num_layers: 3
+  feat_dim: 512
+  inp_dim: 2048
+  out_dim: 19
+
+opt: 'Adam'
+opt_params:
+  kwargs:
+    lr: 5e-4
+    weight_decay: 1e-4
+
+lrsch_params:
+  args: 
+    - [200]
+
+loss_func: 'lib.model.commons.loss_func_gru'
+loss_weights:
+  ce: 1.0
+  lg: 0.0
+
+batch_size: 1
+forward_batch_size: 1
+test_batch_size: 1
+
+# debug flags
+debug_mode: False
+pbar: False
+
+extra_kwargs:
+  num_classes: 19
+  sample_rate: 2
