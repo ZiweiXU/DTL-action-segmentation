@@ -153,7 +153,7 @@ def classification_accuracy(P, Y, bg_class=None, **kwargs):
 def levenstein_(p,y, norm=False):
     m_row = len(p)    
     n_col = len(y)
-    D = np.zeros([m_row+1, n_col+1], np.float)
+    D = np.zeros([m_row+1, n_col+1], np.float64)
     for i in range(m_row+1):
         D[i,0] = i
     for i in range(n_col+1):
@@ -208,9 +208,9 @@ def overlap_f1(P, Y, n_classes=0, bg_class=None, overlap=.1, reduction='per_fram
 
         # We keep track of the per-class TPs, and FPs.
         # In the end we just sum over them though.
-        TP = np.zeros(n_classes, np.float)
-        FP = np.zeros(n_classes, np.float)
-        true_used = np.zeros(n_true, np.float)
+        TP = np.zeros(n_classes, np.float64)
+        FP = np.zeros(n_classes, np.float64)
+        true_used = np.zeros(n_true, np.float64)
 
         for j in range(n_pred):
             # Compute IoU against all others
@@ -286,7 +286,7 @@ def overlap_score(P, Y, bg_class=None, **kwargs):
 
         n_true_segs = true_labels.shape[0]
         n_pred_segs = pred_labels.shape[0]
-        seg_scores = np.zeros(n_true_segs, np.float)
+        seg_scores = np.zeros(n_true_segs, np.float64)
 
         for i in range(n_true_segs):
             for j in range(n_pred_segs):
@@ -318,7 +318,7 @@ def prap(rec, prec, tmp, npos):
     return prec[tmp==1].sum() / npos
 
 def interval_overlap(gt_inter,det_inter):
-    ov = np.zeros([gt_inter.shape[0], det_inter.shape[0]], np.float)
+    ov = np.zeros([gt_inter.shape[0], det_inter.shape[0]], np.float64)
     for i in range(gt_inter.shape[0]):
         union = np.maximum(gt_inter[i,1], det_inter[:,1]) - \
                 np.minimum(gt_inter[i,0], det_inter[:,0])
@@ -333,7 +333,7 @@ def midpoint_criterion(gt_inter,det_inter):
     # gt_inter : truth
     # det_inter : detection
     # '1' if detection midpoint is within truth, otherwise 0
-    ov = np.zeros([gt_inter.shape[0], det_inter.shape[0]], np.float)
+    ov = np.zeros([gt_inter.shape[0], det_inter.shape[0]], np.float64)
     for i in range(gt_inter.shape[0]):
         midpoints = det_inter.mean(1)
         ov[i] = (midpoints>=gt_inter[i][0])*(midpoints<gt_inter[i][1])

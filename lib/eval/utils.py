@@ -147,7 +147,7 @@ def save_predictions(dir_out, y_pred, y_truth, idx_task, experiment_name=""):
 # ------------- Vision -------------
 def load_images(uris, rez_im, uri_data):
 	# Load images for CNN
-	X = np.empty((len(uris), 3, rez_im, rez_im), dtype=np.float32)
+	X = np.empty((len(uris), 3, rez_im, rez_im), dtype=np.float64)
 	for i, x in enumerate(uris):
 		im = cv2.imread(uri_data+x)
 		im = cv2.resize(im, (rez_im, rez_im))
