@@ -1,6 +1,6 @@
 # Differentiable Temporal Logic for Temporal Action Segmentation
 
-This repository contains the software used in our NeurIPS 2022 Paper _Don't Pour Cereal into Coffee: Differentiable Temporal Logic for Temporal Action Segmentation_.
+This repository contains the software used in our NeurIPS 2022 Paper _Don't Pour Cereal into Coffee: Differentiable Temporal Logic for Temporal Action Segmentation_ ([➡️ project page](https://diff-tl.github.io/)).
 
 ## Setup
 
@@ -8,7 +8,7 @@ The codebase is built on `PyTorch 1.10` and `Ubuntu 20.04`.
 In principle it should work on `PyTorch>=1.0`.
 
 1. Clone this repository.
-2. Install dependencies listed in `requirements.txt`. You may need to install [PyTorch](https://pytorch.org/get-started/locally/) if you haven't done so.
+2. Install dependencies listed in `requirements.txt`. You will need to install [PyTorch](https://pytorch.org/get-started/locally/) if you haven't done so.
 3. Download dataset tarballs [here](https://drive.google.com/drive/folders/1j19xtl6HjqtSr0TyLfOTp3R8N5wuU1I-?usp=share_link). Decompress them into `dataset/`.
 
 ## Basic Usage
@@ -20,7 +20,10 @@ python main.py -f ${CONFIG_FILE} [-c <KEY1 VAL1> [KEY2 VAL2]...]
 To run a predefined experiment, replace `${CONFIG_FILE}` with one of the `yml` files
 in `config/`.
 For example, `python main.py -f config/gru_50salads.yml`.
+Please read the corresponding `yml` file for details of the experiment.
+
 Key-value pairs following `-c` can be used to override configs.
+For example, to run the experiment with a different dataset split (say split 2), use `python main.py -f config/gru_50salads.yml -c ds_params.commons.split 2`.
 
 If you feel like having fun and want to run your own experiments, please check `config/defaults.py` for config keys.
 You will need to write a [yacs](https://github.com/rbgirshick/yacs) config file like those `config/*.yml`.
