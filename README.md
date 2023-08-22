@@ -22,11 +22,21 @@ in `config/`.
 For example, `python main.py -f config/gru_50salads.yml`.
 Please read the corresponding `yml` file for details of the experiment.
 
+## Overriding Defaults
+
 Key-value pairs following `-c` can be used to override configs.
 For example, to run the experiment with a different dataset split (say split 2), use `python main.py -f config/gru_50salads.yml -c ds_params.commons.split 2`.
 
-If you feel like having fun and want to run your own experiments, please check `config/defaults.py` for config keys.
+If you feel like having fun and want to run experiments using other parameters, please check `config/defaults.py` for a documented list of config keys.
 You will need to write a [yacs](https://github.com/rbgirshick/yacs) config file like those `config/*.yml`.
+In particular, there are two important parameters: the weight for logic loss (`loss_weights.lg`, corresponding to $\lambda$ in the paper) and the smoothing factor (`extra_kwargs.rho`, corresponding to $\gamma$ in the paper).
+
+## Test a Model
+
+To test a trained model, override `test_only` and `load_weight_from` options, for example:
+```
+python main.py -f config/gru_50salads.yml -c test_only True load_weight_from $PATH_TO_SNAPSHOT/best.state
+```
 
 ## Use DTL in Your Projects
 
