@@ -118,7 +118,7 @@ def loss_func_mstcn(y: torch.Tensor, Y: torch.Tensor, **kwargs):
         - Y : Tensor of shape BxT
     """
     default_lsw = dict.fromkeys(
-        ['ce', 'mce', 'sm', 'lg'], 0.0)
+        ['ce', 'sm', 'lg'], 0.0)
     loss_weights = kwargs.get('loss_weights', default_lsw)
     
     losses = {}
@@ -129,11 +129,6 @@ def loss_func_mstcn(y: torch.Tensor, Y: torch.Tensor, **kwargs):
         losses['ce'] = 0
         for p in y:
             losses['ce'] += F.cross_entropy(p.transpose(1,2).contiguous().view(-1, C), Y.view(-1), ignore_index=-100)
-    
-    if loss_weights.get('mce', 0) > 0 and kwargs['ym'] is not None:
-        Ym, ym= kwargs['Ym'], kwargs['ym']
-        Cm = ym.shape[1]
-        losses['mce'] = F.cross_entropy(ym.view(-1, Cm), Ym.view(-1), ignore_index=-100)
     
     if loss_weights.get('sm', 0) > 0:
         mask = kwargs['mask']
@@ -151,12 +146,6 @@ def loss_func_mstcn(y: torch.Tensor, Y: torch.Tensor, **kwargs):
         tl_eva = kwargs['lg_eva']
         losses['lg'] = 0
         y_ = y[-1][0]
-        if kwargs['ym'] is not None:
-            ym= kwargs['ym']
-            ym_ = ym.transpose(0,1).expand([-1, y_.shape[1]])
-            y_ = torch.cat([_pre_tl_norm(y_, t=0.1), ym_], dim=0)
-        else:
-            y_ = _pre_tl_norm(y_, t=0.1)
         losses['lg'] += _tl_loss(tl_eva(y_))
     
     assert len(losses) > 0
